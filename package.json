@@ -1,18 +1,22 @@
 {
-  "name": "esims",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^8.2.1"
-  },
-  "dependencies": {
-    "file-saver": "^2.0.5",
-    "jszip": "^3.10.1"
-  }
+	"name": "esims",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"homepage": "https://printf83.github.io/esims",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist"
+	},
+	"devDependencies": {
+		"gh-pages": "^6.0.0",
+		"vite": "^8.2.1"
+	},
+	"dependencies": {
+		"file-saver": "^2.0.5",
+		"jszip": "^3.10.1"
+	}
 }
