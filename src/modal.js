@@ -1,10 +1,33 @@
-export const showConfirm = (title, msg, btn, btnType, callback) => {
+const setSafeHTML = (element, htmlString) => {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(htmlString, "text/html");
+
+	// Remove high-risk elements
+	const dangerousElements = doc.querySelectorAll(
+		"script, iframe, object, embed, style",
+	);
+	dangerousElements.forEach((el) => el.remove());
+
+	// Strip inline event attributes (e.g., onclick, onerror)
+	const allElements = doc.querySelectorAll("*");
+	allElements.forEach((el) => {
+		Array.from(el.attributes).forEach((attr) => {
+			if (attr.name.startsWith("on")) {
+				el.removeAttribute(attr.name);
+			}
+		});
+	});
+
+	element.innerHTML = doc.body.innerHTML;
+};
+
+export const showModal = (title, msg, btn, btnType, callback) => {
 	const dlg = document.getElementById("dlgConfirm");
 	const continueBtn = dlg.querySelector(".btn-dlg-continue");
 	const cancelBtn = dlg.querySelector(".btn-dlg-cancel");
 
-	dlg.querySelector(".dialog-title").textContent = title;
-	dlg.querySelector(".dialog-body").textContent = msg;
+	setSafeHTML(dlg.querySelector(".dialog-title"), title);
+	setSafeHTML(dlg.querySelector(".dialog-body"), msg);
 	continueBtn.textContent = btn;
 
 	// Update the active callback on every call

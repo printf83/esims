@@ -119,3 +119,15 @@ export const translateDictionary = (translator, str) => {
 		(matched) => translator.dictionary[matched.toUpperCase()],
 	);
 };
+
+export const getBrowserInfo = () => {
+	const ua = navigator.userAgent;
+
+	if (/edg/i.test(ua)) return "edge";
+	if (/firefox|fxios/i.test(ua)) return "firefox";
+	if (/chrome|crios/i.test(ua) && !/edg/i.test(ua)) return "chrome";
+	if (/safari/i.test(ua) && !/chrome|crios/i.test(ua)) return "safari";
+	if (/opr\//i.test(ua)) return "opera";
+
+	return "unknown";
+};

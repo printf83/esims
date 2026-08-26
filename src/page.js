@@ -5,7 +5,8 @@ import { processResult } from "./process/report";
 import { buildTable } from "./process/buildTable";
 import { buildLocationMap, locationCsvToArray } from "./process/location";
 import { buildCorrectionMap, correctionCsvToArray } from "./process/correction";
-import { showConfirm } from "./confirm";
+import { showModal } from "./modal";
+import { getBrowserInfo } from "./process/util";
 
 export const buildResult = (container, data) => {
 	const mapCorrection = new Map();
@@ -202,14 +203,55 @@ export const attachPrintFn = (btn) => {
 };
 
 export const attachHelpFn = (btn) => {
-	if (btn) {
-		btn.addEventListener("click", () => {
-			showConfirm(
-				"Information",
-				'Please install "Copy Table" browser extensions to copy table from ESIMS',
-				"Okay",
-				"primary",
-			);
-		});
-	}
+	if (!btn) return;
+
+	const browser = getBrowserInfo();
+
+	const ext = {
+		edge: {
+			url: "https://microsoftedge.microsoft.com/addons/detail/copy-as-csv/haojhahdnblgjpbeipemdkndbnkaiogj",
+			name: "Copy to CSV",
+			by: "Free Software Apps",
+			icon: "copy_to_csv.png",
+		},
+		chrome: {
+			url: "https://chromewebstore.google.com/detail/copy-as-csv/nmbngliaokchkodkidehnjbhgpkihdko",
+			name: "Copy to CSV",
+			by: "Free Useful Apps",
+			icon: "copy_to_csv.png",
+		},
+		firefox: {
+			url: "https://addons.mozilla.org/en-US/firefox/addon/csv-reader/",
+			name: "CSV Reader",
+			by: "Rubén",
+			icon: "csv_reader.png",
+		},
+		safari: {
+			url: "https://apps.apple.com/dk/app/copytables/id1472937623?mt=12",
+			name: "Copytables",
+			by: "Georg Barikin",
+			icon: "copy_tables.png",
+		},
+		opera: {
+			url: "https://chromewebstore.google.com/detail/copy-as-csv/nmbngliaokchkodkidehnjbhgpkihdko",
+			name: "Copy to CSV",
+			by: "Free Useful Apps",
+			icon: "copy_to_csv.png",
+		},
+		unknown: {
+			url: "https://www.google.com/search?q=copy+html+table+as+csv+extension+for+my+browser",
+			name: "Search on Google",
+			by: "Google",
+			icon: "google.png",
+		},
+	};
+
+	btn.addEventListener("click", () => {
+		// Fall back to 'unknown' if detected browser isn't in the object map
+		const extData = ext[browser] || ext.unknown;
+
+		const htmlMessage = `Please install the <a href="${extData.url}" target="_blank" rel="noopener noreferrer" class="ext-link" title="Extension by ${extData.by}"><img src="${extData.icon}" alt="icon" /> ${extData.name}</a> extension to copy tables from ESIMS.`;
+
+		showModal("Information", htmlMessage, "Okay", "primary");
+	});
 };

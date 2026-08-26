@@ -209,6 +209,21 @@ body.dialog-open {
 	padding-right: var(--scrollbar-width, 0px);
 }
 
+/* LINK TO EXTENSIONS */
+.ext-link {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0 0.25rem;
+	color: #2563eb;
+}
+
+.ext-link img {
+	width: 16px;
+	height: 16px;
+}
+
 @media print {
 	dialog {
 		display: none;

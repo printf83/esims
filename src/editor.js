@@ -2,7 +2,7 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { buildResult } from "./page";
 import { db } from "./db";
-import { showConfirm } from "./confirm";
+import { showModal } from "./modal";
 
 export const attachDlg = (
 	btn,
@@ -50,9 +50,9 @@ export const attachDlg = (
 		const btnReset = dlg.querySelector(".btn-dlg-reset");
 		if (btnReset) {
 			btnReset.addEventListener("click", () => {
-				showConfirm(
+				showModal(
 					"Reset all data?",
-					"All data will be reset to a default sample template. This action cannot be undone. You will need to re-enter all data later.",
+					"All data will be <b>reset to a default sample template</b>. This action cannot be undone. You will need to re-enter all data later.",
 					"Yes, reset",
 					"danger",
 					() => {
@@ -187,9 +187,9 @@ const attachTab = (dlg, tabTemplate, panelTemplate) => {
 		if (closeBtn) {
 			e.stopPropagation(); // Stop switching tab when clicking close
 
-			showConfirm(
+			showModal(
 				"Remove this company?",
-				`Company "${company}" will be removed. This cannot be undone. You will need to re-enter the data later.`,
+				`Company <b>${company} will be removed</b>. This cannot be undone. You will need to re-enter the data later.`,
 				"Yes, remove",
 				"danger",
 				() => {
