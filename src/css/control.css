@@ -185,3 +185,7 @@
 	border-radius: 0.25rem;
 	color: #374151;
 }
+
+.hide {
+	display: none;
+}

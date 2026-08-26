@@ -23,11 +23,11 @@ export function buildTable(company, data) {
 	const tableHeader = `
 		<tr>
 			<th>Bil</th>
-			<th>Nama</th>
+			<th data-sort="asc" data-sort-index="2">Nama</th>
 			<th>No. KP</th>
-			<th>Lokasi</th>
-			<th>Status Tapisan</th>
-			<th>Status CSG</th>
+			<th data-sort="asc" data-sort-index="0">Lokasi</th>
+			<th>Tapisan</th>
+			<th data-sort="desc" data-sort-index="1">CSG</th>
 		</tr>
 	`;
 
@@ -151,7 +151,7 @@ export function buildTable(company, data) {
 	// 5. Masukkan ke dalam result.innerHTML
 	return `
 			<div class="page">
-				<table>
+				<table class="output">
 					<caption>${tableCaption}</caption>
 					<colgroup>${tableColgroup}</colgroup>
 					<thead>${tableHeader}</thead>

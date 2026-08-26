@@ -1,6 +1,6 @@
 import { data } from "./data.js";
 import { attachDlg } from "./editor.js";
-import { buildResult, attachPrintFn } from "./page.js";
+import { buildResult, attachPrintFn, attachHelpFn } from "./page.js";
 import { db } from "./db.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const dlgEditor = document.querySelector("#dlgEditor");
 	const btnPrint = document.querySelector("#btnPrint");
 	const btnEditor = document.querySelector("#btnEditor");
+	const btnHelp = document.querySelector("#btnHelp");
 
 	const tabTemplate = document.getElementById("tab-template");
 	const panelTemplate = document.getElementById("panel-template");
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	buildResult(container, d);
 	attachPrintFn(btnPrint);
+	attachHelpFn(btnHelp);
 	attachDlg(
 		btnEditor,
 		dlgEditor,

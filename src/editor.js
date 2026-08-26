@@ -54,6 +54,7 @@ export const attachDlg = (
 					"Reset all data?",
 					"All data will be reset to a default sample template. This action cannot be undone. You will need to re-enter all data later.",
 					"Yes, reset",
+					"danger",
 					() => {
 						setDlgData(dlg, tabTemplate, panelTemplate, resetData);
 					},
@@ -190,6 +191,7 @@ const attachTab = (dlg, tabTemplate, panelTemplate) => {
 				"Remove this company?",
 				`Company "${company}" will be removed. This cannot be undone. You will need to re-enter the data later.`,
 				"Yes, remove",
+				"danger",
 				() => {
 					const targetTab = closeBtn.closest(".tab");
 					const targetPanelId =
