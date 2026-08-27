@@ -11,9 +11,21 @@ const addIntoPekerjaMap = (
 	nric,
 	vetting,
 ) => {
-	if (name && nric && !mapWorker.has(nric)) {
+	// if (name && nric && !mapWorker.has(nric)) {
+	// 	const tname = name.toString().trim().toUpperCase();
+	// 	mapWorker.set(nric, {
+	// 		name: tname,
+	// 		nric,
+	// 		vetting: translateVetting(vetting),
+	// 		csg: getCsgAttend(mapCsg, nric),
+	// 		location: getLocation(mapLocation, tname, company),
+	// 	});
+	// }
+
+	// ES2026 Update map.getOrInsert
+	if (name && nric) {
 		const tname = name.toString().trim().toUpperCase();
-		mapWorker.set(nric, {
+		mapWorker.getOrInsert(nric, {
 			name: tname,
 			nric,
 			vetting: translateVetting(vetting),

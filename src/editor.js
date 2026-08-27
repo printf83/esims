@@ -399,9 +399,9 @@ const resetSearch = (searchInput, matchCounter, tabContent) => {
 	performSearch(searchInput, matchCounter, tabContent);
 };
 
-const escapeRegExp = (string) => {
-	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
+// const escapeRegExp = (string) => {
+// 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// };
 
 // Scan across ALL tab panels for matches (does NOT focus textareas)
 const performSearch = (searchInput, matchCounter, tabContent) => {
@@ -415,7 +415,7 @@ const performSearch = (searchInput, matchCounter, tabContent) => {
 	}
 
 	const allPanels = tabContent.querySelectorAll(".tab-panel");
-	const regex = new RegExp(escapeRegExp(query), "gi");
+	const regex = new RegExp(RegExp.escape(query), "gi"); //ES2026 RegExp.escape
 
 	allPanels.forEach((panel) => {
 		const fields = panel.querySelectorAll("textarea, input[type='text']");

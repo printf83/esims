@@ -27,9 +27,12 @@ export function buildCorrectionMap(map, data) {
 	if (data && Array.isArray(data) && data.length > 0) {
 		data.forEach((p) => {
 			if (p.wrong && p.correct) {
-				if (!map.has(p.wrong)) {
-					map.set(p.wrong, p);
-				}
+				// if (!map.has(p.wrong)) {
+				// 	map.set(p.wrong, p);
+				// }
+
+				// ES2026 Update map.getOrInsert
+				map.getOrInsert(p.wrong, p);
 			}
 		});
 	}

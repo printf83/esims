@@ -65,9 +65,12 @@ export function buildLocationMap(mapCorrection, mapLocation, data) {
 
 					mapLocation.set(key, q);
 
-					if (!mapLocation.has(name)) {
-						mapLocation.set(name, q);
-					}
+					// if (!mapLocation.has(name)) {
+					// 	mapLocation.set(name, q);
+					// }
+
+					// ES2026 Update map.getOrInsert
+					mapLocation.getOrInsert(name, q);
 				} else {
 					console.warn(
 						`Pekerja dengan name "${key}" sudah wujud dalam map. Pekerja diabaikan.`,

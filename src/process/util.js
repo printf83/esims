@@ -105,8 +105,13 @@ export const convertDictionaryToTranslator = (dictionaryObjectKeys) => {
 	const keys = Object.keys(dictionaryObjectKeys).sort(
 		(a, b) => b.length - a.length,
 	);
+
+	// ES2026 RegExp.escape
 	return {
-		regex: new RegExp(`\\b(${keys.join("|")})\\b`, "gi"),
+		regex: new RegExp(
+			`\\b(${keys.map((i) => RegExp.escape(i)).join("|")})\\b`,
+			"gi",
+		),
 		dictionary: dictionaryObjectKeys,
 	};
 };

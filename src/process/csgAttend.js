@@ -45,8 +45,13 @@ export function csgAttendCsvToArray(csv) {
 export function buildCsgAttendMap(map, data) {
 	if (data && Array.isArray(data) && data.length > 0) {
 		data.forEach((p) => {
-			if (p.nric && !map.has(p.nric)) {
-				map.set(p.nric, p);
+			// if (p.nric && !map.has(p.nric)) {
+			// 	map.set(p.nric, p);
+			// }
+
+			// ES2026 Update map.getOrInsert
+			if (p.nric) {
+				map.getOrInsert(p.nric, p);
 			}
 		});
 	}
