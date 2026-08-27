@@ -42,7 +42,7 @@ export const buildResult = (container, data) => {
 		`Prosess siap dalam masa ${(performance.now() - startTimer).toFixed(2)}ms`,
 	);
 
-	container.innerHTML = html.join('<div class="page-break"></div>');
+	container.innerHTML = html.join("\n");
 
 	attachHoverEffect(container, "span[data-type]");
 	attachTableSort(container, "table.output");

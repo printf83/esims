@@ -21,234 +21,37 @@ body {
 }
 
 #app {
-	width: 1126px;
-	max-width: 100%;
 	margin: 0 auto;
 	text-align: center;
 	min-height: 100svh;
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-}
-
-#center {
-	display: flex;
-	flex-direction: column;
-	gap: 25px;
-	place-content: center;
-	place-items: center;
-	flex-grow: 1;
 	justify-content: start;
-}
-
-table.output caption {
-	margin-bottom: 0.5rem;
-}
-
-table.output caption div {
-	font-size: x-small;
-	font-weight: normal;
-	text-align: left;
-	margin-top: 0.3rem;
-	line-height: 2;
-}
-
-table.output caption div span {
-	display: inline-block;
-	padding: 0 5px;
-	border-radius: 3px;
-	line-height: 1.5;
-	margin-right: 1px;
-}
-
-table.output caption div span.label {
-	width: 4.5rem;
-	padding-left: 0;
-}
-
-table.output caption h1 {
-	margin: 0 0 0.5rem 0;
-	width: 100%;
-	text-decoration: underline;
-	font-size: 1rem;
-	font-weight: 600;
-}
-
-table.output {
-	border-collapse: collapse;
-	font-size: x-small;
-	font-weight: 400;
-	width: 100%;
-	line-height: 1.5;
-	table-layout: fixed;
-}
-
-table.output thead tr {
-	background-color: rgba(202, 199, 199, 0.795);
-}
-
-table.output thead tr th {
-	font-weight: 600;
-}
-
-table.output td,
-table.output th {
-	padding: 1px 5px;
-	border: 1px solid rgb(58, 58, 58);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-table.output th:not(:first-child) {
-	cursor: pointer;
-	position: relative;
-}
-
-table.output th:not(:first-child)::after {
-	font-size: 0.75em;
-	position: absolute;
-	right: 0;
-	top: 1px;
-}
-
-/* Common indicator styling */
-th[data-sort]::after {
-	content: "";
-	width: 16px;
-	height: 16px;
-	/* margin-left: 4px; */
-	vertical-align: middle;
-	background-color: currentColor; /* Matches the text color automatically */
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-	-webkit-mask-size: contain;
-	mask-size: contain;
-}
-
-/* Ascending (Z-A / Up Arrow) */
-th[data-sort="desc"]::after {
-	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M444-240v-294L339-429l-51-51 192-192 192 192-51 51-105-105v294h-72Z'/%3E%3C/svg%3E");
-	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M444-240v-294L339-429l-51-51 192-192 192 192-51 51-105-105v294h-72Z'/%3E%3C/svg%3E");
-}
-
-/* Descending (A-Z / Down Arrow) */
-th[data-sort="asc"]::after {
-	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-288 288-480l51-51 105 105v-294h72v294l105-105 51 51-192 192Z'/%3E%3C/svg%3E");
-	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M480-288 288-480l51-51 105 105v-294h72v294l105-105 51 51-192 192Z'/%3E%3C/svg%3E");
-}
-
-table.output tr td:nth-child(2),
-table.output tr td:nth-child(4) {
-	text-align: left;
-}
-
-table.output span.success,
-table.output td.success,
-table.output tr.success,
-table.output tr.vettingPassAndCsgAttend {
-	background-color: rgba(210, 243, 210, 0.185);
-	color: rgb(13, 94, 13);
-}
-
-table.output span.danger,
-table.output td.danger,
-table.output tr.danger,
-table.output tr.vettingFail,
-table.output tr.overAge {
-	background-color: rgba(245, 188, 188, 0.322);
-	color: rgb(141, 0, 0);
-}
-
-table.output span.warning,
-table.output td.warning,
-table.output tr.warning,
-table.output tr.vettingPassAndCsgMiss {
-	background-color: rgba(240, 237, 202, 0.322);
-	color: rgb(141, 63, 0);
-}
-
-table.output span.primary,
-table.output td.primary,
-table.output tr.primary {
-	background-color: rgba(202, 228, 240, 0.322);
-	color: rgb(0, 26, 141);
-}
-
-table.output span.info,
-table.output td.info,
-table.output tr.info,
-table.output tr.vettingRequestAndCsgAttend {
-	background-color: rgba(202, 239, 240, 0.322);
-	color: rgb(0, 101, 141);
-}
-
-table.output tr[class] td[class] {
-	background-color: transparent;
-	color: inherit;
-}
-
-table.output.vettingPass tr.vettingPass td,
-table.output.vettingFail tr.vettingFail td,
-table.output.vettingRequest tr.vettingRequest td,
-table.output.csgAttend tr.csgAttend td,
-table.output.csgZero tr.csgZero td,
-table.output.csgMiss tr.csgMiss td,
-table.output.overAge tr.overAge td,
-table.output.notInLocation tr.notInLocation td,
-table.output.vettingPassAndCsgAttend tr.vettingPassAndCsgAttend td,
-table.output.vettingPassAndCsgMiss tr.vettingPassAndCsgMiss td,
-table.output.vettingRequestAndCsgAttend tr.vettingRequestAndCsgAttend td,
-table.output span[data-type][data-value="true"] {
-	font-weight: 600;
-	text-shadow: -1px -1px 2px rgba(123, 118, 118, 0.2);
-}
-
-table.output span[data-type]:hover {
-	cursor: pointer;
-}
-
-table.output span.success {
-	border: 1px solid rgb(13, 94, 13);
-}
-
-table.output span.danger {
-	border: 1px solid rgb(141, 0, 0);
-}
-
-table.output span.warning {
-	border: 1px solid rgb(141, 63, 0);
-}
-
-table.output span.primary {
-	border: 1px solid rgb(0, 26, 141);
-}
-
-table.output span.info {
-	border: 1px solid rgb(0, 120, 141);
-}
-
-table.output span.dark {
-	font-size: xx-small;
-	text-transform: lowercase;
-	display: inline-block;
-	border: none;
-	border-radius: 5px;
-	padding: 0px 3px;
-}
-
-table.output .text-danger {
-	font-weight: 600;
-	color: red !important;
+	align-items: center;
 }
 
 #result {
-	padding-bottom: 3rem;
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	place-items: center;
+	flex-grow: 1;
+	justify-content: start;
+	padding: 0 0 30px 0;
+}
+
+#controller {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	width: 210mm;
 }
 
-.page-break {
-	height: 3rem;
+#controller .btn-container {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: end;
 }
 
 @media screen {
@@ -257,8 +60,10 @@ table.output .text-danger {
 	}
 
 	.page {
-		padding: 0.5cm;
-		background-color: #fdfbf7; /* Off-white warm paper tone */
+		width: 210mm;
+		min-height: 297mm;
+		padding: 0.75cm 0.5cm; /* same like @media print @page margin */
+		background-color: #fdfbf7;
 		border: 1px solid #e7e5e4;
 		border-radius: 2px;
 		box-shadow:
@@ -269,26 +74,17 @@ table.output .text-danger {
 }
 
 @media print {
-	.page-break {
-		page-break-after: always;
-		height: 0 !important;
-	}
-
 	@page {
 		size: A4 portrait;
-		margin: 0.5cm;
+		margin: 0.75cm 0.5cm;
 	}
 
 	#result {
-		width: 98%;
-		padding-bottom: 0 !important;
-	}
-
-	#center {
 		gap: 0;
+		padding: 0;
 	}
 
-	table {
-		width: 100%;
+	#controller {
+		display: none;
 	}
 }
