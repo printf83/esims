@@ -252,6 +252,6 @@ export const attachHelpFn = (btn) => {
 
 		const htmlMessage = `Please install the <a href="${extData.url}" target="_blank" rel="noopener noreferrer" class="ext-link" title="Extension by ${extData.by}"><img src="${extData.icon}" alt="icon" /> ${extData.name}</a> extension to copy tables from ESIMS.`;
 
-		showModal("Information", htmlMessage, "Okay", "primary");
+		showModal("Information", htmlMessage, null, "Okay", "primary");
 	});
 };

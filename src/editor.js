@@ -52,7 +52,8 @@ export const attachDlg = (
 			btnReset.addEventListener("click", () => {
 				showModal(
 					"Reset all data?",
-					"All data will be <b>reset to a default sample template</b>. This action cannot be undone. You will need to re-enter all data later.",
+					"All data will be <b>reset to a default sample template</b>. This action cannot be undone. Please ensure you have backed up your data before proceeding.",
+					"I have a backup",
 					"Yes, reset",
 					"danger",
 					() => {
@@ -189,7 +190,8 @@ const attachTab = (dlg, tabTemplate, panelTemplate) => {
 
 			showModal(
 				"Remove this company?",
-				`Company <b>${company} will be removed</b>. This cannot be undone. You will need to re-enter the data later.`,
+				`Company <b>${company} will be removed</b>. This action cannot be undone. Please ensure you have backed up your data before proceeding.`,
+				"I have a backup",
 				"Yes, remove",
 				"danger",
 				() => {
