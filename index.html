@@ -7,8 +7,8 @@
 
 
 		<title>esims report</title>
-		<script type="module" crossorigin src="/esims/assets/index-WFPzV4G3.js"></script>
-		<link rel="stylesheet" crossorigin href="/esims/assets/index-JPMKZ_Uw.css">
+		<script type="module" crossorigin src="/esims/assets/index-CMVAGhtm.js"></script>
+		<link rel="stylesheet" crossorigin href="/esims/assets/index-2WYZ2v0L.css">
 	</head>
 	<body>
 		<div id="app">
@@ -127,7 +127,6 @@
 							<textarea
 								id="name-correction"
 								class="form-textarea dlg-tab-main-name-correction"
-								rows="10"
 								placeholder="<wrong_name_from_salary>,<correct_name_from_esims>"
 							></textarea>
 							<p class="form-helper">
@@ -136,8 +135,9 @@
 							</p>
 							<p class="form-helper">
 								CSV Format:
-								<code>&lt;wrong_name_in_salary&gt;</code>,
-								<code>&lt;correct_name_in_esims&gt;</code>
+								<code
+									>&lt;wrong_name_in_salary&gt;,&lt;correct_name_in_esims&gt;</code
+								>
 							</p>
 						</div>
 						<div class="form-group">
@@ -147,7 +147,6 @@
 							<textarea
 								id="location-esims"
 								class="form-textarea dlg-tab-main-location-esims"
-								rows="10"
 								placeholder="<name>,<location>"
 							></textarea>
 							<p class="form-helper">
@@ -160,8 +159,8 @@
 								>,
 							</p>
 							<p class="form-helper">
-								CSV Format: <code>&lt;name&gt;</code>,
-								<code>&lt;location&gt;</code>
+								CSV Format:
+								<code>&lt;name&gt;,&lt;location&gt;</code>
 							</p>
 						</div>
 					</div>
@@ -378,7 +377,6 @@
 					>
 					<textarea
 						class="form-textarea input-vetting-request"
-						rows="10"
 						placeholder="<bil>,<no_rujukan>,<nama>,<nokp>,<status>,<aktiviti>"
 					></textarea>
 
@@ -392,11 +390,9 @@
 					</p>
 					<p class="form-helper">
 						CSV Format:
-						<code>&lt;bil&gt;</code>,
-						<code>&lt;no_rujukan&gt;</code>,
-						<code>&lt;nama&gt;</code>, <code>&lt;nokp&gt;</code>,
-						<code>&lt;status&gt;</code>,
-						<code>&lt;aktiviti&gt;</code>
+						<code
+							>&lt;bil&gt;,&lt;no_rujukan&gt;,&lt;nama&gt;,&lt;nokp&gt;,&lt;status&gt;,&lt;aktiviti&gt;</code
+						>
 					</p>
 				</div>
 
@@ -406,7 +402,6 @@
 					>
 					<textarea
 						class="form-textarea input-vetting-result"
-						rows="10"
 						placeholder="<bil>,<no_rujukan>,<nama>,<nokp>,<jenis>,<status>,<aktiviti>"
 					></textarea>
 					<p class="form-helper">
@@ -419,11 +414,9 @@
 					</p>
 					<p class="form-helper">
 						CSV Format:
-						<code>&lt;bil&gt;</code>,
-						<code>&lt;no_rujukan&gt;</code>,
-						<code>&lt;nama&gt;</code>, <code>&lt;nokp&gt;</code>,
-						<code>&lt;jenis&gt;</code>, <code>&lt;status&gt;</code>,
-						<code>&lt;aktiviti&gt;</code>
+						<code
+							>&lt;bil&gt;,&lt;no_rujukan&gt;,&lt;nama&gt;,&lt;nokp&gt;,&lt;jenis&gt;,&lt;status&gt;,&lt;aktiviti&gt;</code
+						>
 					</p>
 				</div>
 
@@ -433,7 +426,6 @@
 					>
 					<textarea
 						class="form-textarea input-csg-attend"
-						rows="10"
 						placeholder="<bil>,<nama>,<lokasi_latihan>,<tarikh_mula>,<tarikh_tamat>,<no_siri>"
 					></textarea>
 					<p class="form-helper">
@@ -446,11 +438,9 @@
 					</p>
 					<p class="form-helper">
 						CSV Format:
-						<code>&lt;bil&gt;</code>, <code>&lt;nama&gt;</code>,
-						<code>&lt;lokasi_latihan&gt;</code>,
-						<code>&lt;tarikh_mula&gt;</code>,
-						<code>&lt;tarikh_tamat&gt;</code>,
-						<code>&lt;no_siri&gt;</code>
+						<code
+							>&lt;bil&gt;,&lt;nama&gt;,&lt;lokasi_latihan&gt;,&lt;tarikh_mula&gt;,&lt;tarikh_tamat&gt;,&lt;no_siri&gt;</code
+						>
 					</p>
 				</div>
 
@@ -458,16 +448,15 @@
 					<label class="form-label label-location">Location</label>
 					<textarea
 						class="form-textarea input-location"
-						rows="10"
 						placeholder="<name>,<location>"
 					></textarea>
 					<p class="form-helper">
 						Source:
-						<code>Company account department</code>,
+						<code>Company account department</code>
 					</p>
 					<p class="form-helper">
 						CSV Format:
-						<code>&lt;name&gt;</code>, <code>&lt;location&gt;</code>
+						<code>&lt;name&gt;,&lt;location&gt;</code>
 					</p>
 				</div>
 			</div>
