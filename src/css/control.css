@@ -152,16 +152,12 @@
 		text;
 }
 
-.form-textarea {
-	field-sizing: content;
-	max-height: 15rem;
-	min-height: 2rem;
-}
-
 /* Textarea Specifics */
 .form-textarea {
-	min-height: 5rem;
+	min-height: 4rem;
 	resize: vertical;
+	field-sizing: content;
+	max-height: 15rem;
 }
 
 /* Placeholder Styling */
@@ -206,7 +202,7 @@
 	color: #6b7280; /* text-gray-500 */
 	margin: 0;
 	line-height: 1rem;
-	margin-top: -0.25rem;
+	margin-top: -0.15rem;
 }
 
 /* Style links inside helper text if needed */
