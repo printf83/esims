@@ -1,12 +1,18 @@
 import { data } from "./data.js";
 import { attachDlg } from "./editor.js";
-import { buildResult, attachPrintFn, attachHelpFn } from "./page.js";
+import {
+	buildResult,
+	attachPrintFn,
+	attachDownloadPdfFn,
+	attachHelpFn,
+} from "./page.js";
 import { db } from "./db.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
 	const container = document.querySelector("#result");
 	const dlgEditor = document.querySelector("#dlgEditor");
 	const btnPrint = document.querySelector("#btnPrint");
+	const btnPDF = document.querySelector("#btnPDF");
 	const btnEditor = document.querySelector("#btnEditor");
 	const btnHelp = document.querySelector("#btnHelp");
 
@@ -18,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	buildResult(container, d);
 	attachPrintFn(btnPrint);
+	attachDownloadPdfFn(btnPDF);
 	attachHelpFn(btnHelp);
 	attachDlg(
 		btnEditor,

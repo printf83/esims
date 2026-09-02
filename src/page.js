@@ -7,6 +7,8 @@ import { buildLocationMap, locationCsvToArray } from "./process/location";
 import { buildCorrectionMap, correctionCsvToArray } from "./process/correction";
 import { showModal } from "./modal";
 import { getBrowserInfo } from "./process/util";
+import { toCanvas } from "html-to-image";
+import jsPDF from "jspdf";
 
 export const buildResult = (container, data) => {
 	const mapCorrection = new Map();
@@ -254,4 +256,74 @@ export const attachHelpFn = (btn) => {
 
 		showModal("Information", htmlMessage, null, "Okay", "primary");
 	});
+};
+
+async function generatePDF(selector, filename = "document.pdf") {
+	const pages = Array.from(document.querySelectorAll(selector));
+
+	if (pages.length === 0) {
+		console.warn("No pages found matching selector:", selector);
+		return;
+	}
+
+	let pdf = null;
+
+	for (let i = 0; i < pages.length; i++) {
+		const pageElement = pages[i];
+
+		// Measure exact element dimensions in pixels
+		const width = pageElement.offsetWidth;
+		const height = pageElement.offsetHeight;
+
+		// Convert page wrapper to Canvas using exact element bounds
+		const canvas = await toCanvas(pageElement, {
+			pixelRatio: 2,
+			width: width,
+			height: height,
+		});
+
+		if (i === 0) {
+			pdf = new jsPDF({
+				orientation: "portrait",
+				unit: "mm",
+				format: "a4",
+			});
+		} else {
+			pdf.addPage("a4", "portrait");
+		}
+
+		const pdfWidth = pdf.internal.pageSize.getWidth();
+		const pdfHeight = pdf.internal.pageSize.getHeight();
+
+		// Render canvas image to fill the PDF page exactly
+		pdf.addImage(
+			canvas,
+			"PNG",
+			0,
+			0,
+			pdfWidth,
+			pdfHeight,
+			`page-${i}`,
+			"FAST",
+		);
+
+		// Clean up GPU canvas memory
+		canvas.width = 0;
+		canvas.height = 0;
+	}
+
+	pdf.save(filename);
+}
+
+export const attachDownloadPdfFn = (btn) => {
+	if (btn) {
+		btn.addEventListener("click", async () => {
+			btn.setAttribute("disabled", "disabled");
+			await generatePDF(
+				"#result > div.page",
+				`esims ${new Date().toISOString().split("T")[0].toString().replaceAll("-", "")}.pdf`,
+			);
+			btn.removeAttribute("disabled");
+		});
+	}
 };
