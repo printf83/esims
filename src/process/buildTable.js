@@ -1,3 +1,4 @@
+import { MAX_ROWS_PER_PAGE, TABLE_TITLE_ROWS } from "../const";
 import {
 	spanLabel,
 	spanValue,
@@ -107,11 +108,10 @@ export function buildTable(company, data) {
 	};
 
 	// 3. Bina baris-baris data (Rows) menggunakan .map()
-	const tableRows = data
-		.map((d, index) => {
-			const itemClassName = updateReport(d);
+	const tableRows = data.map((d, index) => {
+		const itemClassName = updateReport(d);
 
-			return `
+		return `
 				<tr${attrValue("class", itemClassName)}>
 					<td>${index + 1}</td>
 					<td>${d.name}</td>
@@ -121,9 +121,7 @@ export function buildTable(company, data) {
 					<td${attrValue("class", tdCsg(d.csg))}>${d.csg}</td$>
 				</tr$>
     			`;
-		})
-		.join("");
-
+	});
 	// 4. Bina caption
 	const tableCaption = `
             <h1>Senarai Tapisan &amp; CSG PK ${company} di dalam sistem ESIMS pada ${new Date().toLocaleDateString("en-GB")}</h1>
@@ -149,14 +147,47 @@ export function buildTable(company, data) {
             </div>`;
 
 	// 5. Masukkan ke dalam result.innerHTML
-	return `
+
+	// Configuration for page capacities
+	const tableTitleRows = TABLE_TITLE_ROWS; // Space consumed on page 1
+	const maxRowsPerPage = MAX_ROWS_PER_PAGE; // Standard max rows for regular pages
+	const firstPageMaxRows = maxRowsPerPage - tableTitleRows; // Capacity for page 1
+
+	const pages = [];
+	let currentIndex = 0;
+
+	while (currentIndex < tableRows.length) {
+		// Page 0 uses the reduced capacity; all subsequent pages use full capacity
+		const currentPageSize =
+			pages.length === 0 ? firstPageMaxRows : maxRowsPerPage;
+
+		// Extract the slice for the current page
+		const pageRows = tableRows.slice(
+			currentIndex,
+			currentIndex + currentPageSize,
+		);
+		pages.push(pageRows);
+
+		// Advance the pointer by the number of rows processed
+		currentIndex += currentPageSize;
+	}
+
+	const pageContents = pages.map((pageRows, pageIndex) => {
+		return `
 			<div class="page">
 				<table class="output">
-					<caption>${tableCaption}</caption>
+					${pageIndex === 0 ? `<caption>${tableCaption}</caption>` : ""}
 					<colgroup>${tableColgroup}</colgroup>
 					<thead>${tableHeader}</thead>
-					<tbody>${tableRows}</tbody>
+					<tbody>${pageRows.join("")}</tbody>
 				</table>
 			</div>
 		`;
+	});
+
+	return `
+		<div class="group">
+			${pageContents.join("")}
+		</div>
+	`;
 }

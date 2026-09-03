@@ -101,6 +101,24 @@
 	color: #ffffff;
 }
 
+/* Spinner */
+.btn-spinner {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: btn-spinner-rotate 0.75s linear infinite;
+	vertical-align: middle;
+}
+
+@keyframes btn-spinner-rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 /* Form Group Container */
 .form-group {
 	display: flex;

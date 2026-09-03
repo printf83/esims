@@ -9,6 +9,7 @@ import { showModal } from "./modal";
 import { getBrowserInfo } from "./process/util";
 import { toCanvas } from "html-to-image";
 import jsPDF from "jspdf";
+import { MAX_ROWS_PER_PAGE, TABLE_TITLE_ROWS } from "./const";
 
 export const buildResult = (container, data) => {
 	const mapCorrection = new Map();
@@ -47,7 +48,10 @@ export const buildResult = (container, data) => {
 	container.innerHTML = html.join("\n");
 
 	attachHoverEffect(container, "span[data-type]");
-	attachTableSort(container, "table.output");
+	attachGroupTableSort(container, "div.group", {
+		tableTitleRows: TABLE_TITLE_ROWS,
+		maxRowsPerPage: MAX_ROWS_PER_PAGE,
+	});
 };
 
 const attachHoverEffect = (container, selector) => {
@@ -56,15 +60,15 @@ const attachHoverEffect = (container, selector) => {
 	if (elements && elements.length > 0) {
 		elements.forEach((el) => {
 			el.addEventListener("click", () => {
-				const table = el.closest("table");
+				const group = el.closest("div.group");
 				const type = el.dataset.type;
 
-				if (table) {
+				if (group) {
 					if (el.dataset.value !== "true") {
-						table.classList.add(type);
+						group.classList.add(type);
 						el.dataset.value = "true";
 					} else {
-						table.classList.remove(type);
+						group.classList.remove(type);
 						el.dataset.value = "false";
 					}
 				}
@@ -73,31 +77,28 @@ const attachHoverEffect = (container, selector) => {
 	}
 };
 
-const attachTableSort = (container, selector) => {
-	const listOfTable = container.querySelectorAll(selector);
+export const attachGroupTableSort = (
+	container,
+	groupSelector,
+	options = {},
+) => {
+	const { tableTitleRows = 10, maxRowsPerPage = 50 } = options;
+	const firstPageMaxRows = maxRowsPerPage - tableTitleRows;
 
-	listOfTable.forEach((table) => {
-		const listOfTh = table.querySelectorAll("th");
-		const tbody = table.querySelector("tbody");
+	const groups = container.querySelectorAll(groupSelector);
 
-		// Helper function to renumber the first <td> of each row
-		const renumberRows = () => {
-			if (!tbody) return;
-			const rows = tbody.querySelectorAll("tr");
-			rows.forEach((row, idx) => {
-				const firstCell = row.querySelector("td");
-				if (firstCell) {
-					firstCell.textContent = idx + 1;
-				}
-			});
-		};
+	groups.forEach((group) => {
+		const pages = Array.from(group.querySelectorAll(".page"));
+		if (pages.length === 0) return;
 
-		// Helper function to re-sort rows based on active th sort parameters
-		const sortTableRows = () => {
-			if (!tbody) return;
+		// Gather all column headers across tables (they all share the same structure)
+		const allThs = group.querySelectorAll("table.output thead th");
+		// Get primary set of headers for tracking multi-column sort state
+		const primaryThs = pages[0].querySelectorAll("table.output thead th");
 
-			// 1. Gather all currently sorted headers ordered by priority
-			const sortedHeaders = Array.from(listOfTh)
+		const sortAndRepaginateGroup = () => {
+			// 1. Gather active sort configurations
+			const sortedHeaders = Array.from(primaryThs)
 				.filter(
 					(th) =>
 						th.hasAttribute("data-sort") &&
@@ -112,10 +113,15 @@ const attachTableSort = (container, selector) => {
 
 			if (sortedHeaders.length === 0) return;
 
-			// 2. Sort the <tr> elements
-			const rows = Array.from(tbody.querySelectorAll("tr"));
+			// 2. Extract ALL <tr> elements across all .page tables in this .group
+			const allRows = [];
+			pages.forEach((page) => {
+				const rows = page.querySelectorAll("table.output tbody tr");
+				rows.forEach((row) => allRows.push(row));
+			});
 
-			rows.sort((rowA, rowB) => {
+			// 3. Sort all rows together as one dataset
+			allRows.sort((rowA, rowB) => {
 				for (const sortInfo of sortedHeaders) {
 					const cellA =
 						rowA.children[
@@ -140,57 +146,99 @@ const attachTableSort = (container, selector) => {
 				return 0;
 			});
 
-			// 3. Re-append rows back to tbody in new order
-			rows.forEach((row) => tbody.appendChild(row));
+			// 4. Renumber all rows sequentially across pages
+			allRows.forEach((row, globalIdx) => {
+				const firstCell = row.querySelector("td");
+				if (firstCell) {
+					firstCell.textContent = globalIdx + 1;
+				}
+			});
 
-			// 4. Update row numbers in the first column
-			renumberRows();
+			// 5. Redistribute sorted rows back into their page containers
+			let rowIndex = 0;
+			pages.forEach((page, pageIndex) => {
+				const tbody = page.querySelector("table.output tbody");
+				if (!tbody) return;
+
+				tbody.innerHTML = ""; // Clear current page content
+
+				// Determine capacity for this specific page
+				const capacity =
+					pageIndex === 0 ? firstPageMaxRows : maxRowsPerPage;
+				const pageRows = allRows.slice(rowIndex, rowIndex + capacity);
+
+				pageRows.forEach((row) => tbody.appendChild(row));
+				rowIndex += capacity;
+			});
 		};
 
-		// Attach click listeners to TH elements
-		listOfTh.forEach((th, index) => {
-			// Skip first column header (e.g., 'Bil')
-			if (index === 0) return;
+		// Synchronize header visual states across all pages in the group
+		const syncHeaderAttributes = (targetIndex, sortDir, sortIndex) => {
+			pages.forEach((page) => {
+				const th = page.querySelectorAll("table.output thead th")[
+					targetIndex
+				];
+				if (!th) return;
+
+				if (sortDir) {
+					th.setAttribute("data-sort", sortDir);
+					th.setAttribute("data-sort-index", sortIndex);
+				} else {
+					th.removeAttribute("data-sort");
+					th.removeAttribute("data-sort-index");
+				}
+			});
+		};
+
+		// Attach click events to all column headers across all page tables
+		allThs.forEach((th) => {
+			const columnIndex = Array.from(th.parentNode.children).indexOf(th);
+			if (columnIndex === 0) return; // Skip row number column ('Bil')
 
 			th.addEventListener("click", () => {
 				const currentSort = th.getAttribute("data-sort");
 
 				if (currentSort === "asc") {
-					th.setAttribute("data-sort", "desc");
+					syncHeaderAttributes(
+						columnIndex,
+						"desc",
+						th.getAttribute("data-sort-index"),
+					);
 				} else if (currentSort === "desc") {
 					const removedIndex = parseInt(
 						th.getAttribute("data-sort-index"),
 						10,
 					);
-					th.removeAttribute("data-sort");
-					th.removeAttribute("data-sort-index");
 
+					// Clear sort on clicked column across all pages
+					syncHeaderAttributes(columnIndex, null, null);
+
+					// Re-index remaining sorted headers
 					if (!isNaN(removedIndex)) {
-						listOfTh.forEach((otherTh) => {
+						primaryThs.forEach((pTh, idx) => {
 							const otherIndex = parseInt(
-								otherTh.getAttribute("data-sort-index"),
+								pTh.getAttribute("data-sort-index"),
 								10,
 							);
 							if (otherIndex > removedIndex) {
-								otherTh.setAttribute(
-									"data-sort-index",
+								syncHeaderAttributes(
+									idx,
+									pTh.getAttribute("data-sort"),
 									otherIndex - 1,
 								);
 							}
 						});
 					}
 				} else {
-					th.setAttribute("data-sort", "asc");
 					const activeSortedThs =
-						table.querySelectorAll("th[data-sort]");
-					th.setAttribute(
-						"data-sort-index",
-						activeSortedThs.length - 1,
-					);
+						primaryThs[0].parentNode.querySelectorAll(
+							"th[data-sort]",
+						);
+					const newIndex = activeSortedThs.length;
+					syncHeaderAttributes(columnIndex, "asc", newIndex);
 				}
 
-				// Execute sort and renumbering
-				sortTableRows();
+				sortAndRepaginateGroup();
 			});
 		});
 	});
@@ -277,7 +325,7 @@ async function generatePDF(selector, filename = "document.pdf") {
 
 		// Convert page wrapper to Canvas using exact element bounds
 		const canvas = await toCanvas(pageElement, {
-			pixelRatio: 2,
+			pixelRatio: 4,
 			width: width,
 			height: height,
 		});
@@ -319,11 +367,29 @@ export const attachDownloadPdfFn = (btn) => {
 	if (btn) {
 		btn.addEventListener("click", async () => {
 			btn.setAttribute("disabled", "disabled");
-			await generatePDF(
-				"#result > div.page",
-				`esims ${new Date().toISOString().split("T")[0].toString().replaceAll("-", "")}.pdf`,
-			);
-			btn.removeAttribute("disabled");
+
+			// 1. Find the SVG element and save its HTML string
+			const svgIcon = btn.querySelector("svg");
+			const originalSvg = svgIcon ? svgIcon.outerHTML : "";
+
+			// 2. Replace the SVG with a spinner element
+			if (svgIcon) {
+				svgIcon.outerHTML = '<span class="btn-spinner"></span>';
+			}
+
+			try {
+				await generatePDF(
+					"#result div.page",
+					`esims ${new Date().toISOString().split("T")[0].toString().replaceAll("-", "")}.pdf`,
+				);
+			} finally {
+				// 3. Restore the original SVG icon and enable the button
+				const spinner = btn.querySelector(".btn-spinner");
+				if (spinner) {
+					spinner.outerHTML = originalSvg;
+				}
+				btn.removeAttribute("disabled");
+			}
 		});
 	}
 };

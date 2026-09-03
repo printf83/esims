@@ -149,17 +149,24 @@ table.output tr[class] td[class] {
 	color: inherit;
 }
 
-table.output.vettingPass tr.vettingPass td,
-table.output.vettingFail tr.vettingFail td,
-table.output.vettingRequest tr.vettingRequest td,
-table.output.csgAttend tr.csgAttend td,
-table.output.csgZero tr.csgZero td,
-table.output.csgMiss tr.csgMiss td,
-table.output.overAge tr.overAge td,
-table.output.notInLocation tr.notInLocation td,
-table.output.vettingPassAndCsgAttend tr.vettingPassAndCsgAttend td,
-table.output.vettingPassAndCsgMiss tr.vettingPassAndCsgMiss td,
-table.output.vettingRequestAndCsgAttend tr.vettingRequestAndCsgAttend td,
+div.group.vettingPass table.output tr.vettingPass td,
+div.group.vettingFail table.output tr.vettingFail td,
+div.group.vettingRequest table.output tr.vettingRequest td,
+div.group.csgAttend table.output tr.csgAttend td,
+div.group.csgZero table.output tr.csgZero td,
+div.group.csgMiss table.output tr.csgMiss td,
+div.group.overAge table.output tr.overAge td,
+div.group.notInLocation table.output tr.notInLocation td,
+div.group.vettingPassAndCsgAttend table.output tr.vettingPassAndCsgAttend td,
+div.group.vettingPassAndCsgMiss table.output tr.vettingPassAndCsgMiss td,
+div.group.vettingRequestAndCsgAttend
+	table.output
+	tr.vettingRequestAndCsgAttend
+	td {
+	font-weight: 600;
+	text-shadow: -1px -1px 2px rgba(123, 118, 118, 0.2);
+}
+
 table.output span[data-type][data-value="true"] {
 	font-weight: 600;
 	text-shadow: -1px -1px 2px rgba(123, 118, 118, 0.2);
