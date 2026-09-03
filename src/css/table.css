@@ -70,6 +70,10 @@ table.output th:not(:first-child)::after {
 	top: 1px;
 }
 
+table.output th:not(:first-child)[data-sort="desc"]::after {
+	top: 0;
+}
+
 /* Common indicator styling */
 th[data-sort]::after {
 	content: "";
@@ -161,6 +165,10 @@ table.output span[data-type][data-value="true"] {
 	text-shadow: -1px -1px 2px rgba(123, 118, 118, 0.2);
 }
 
+table.output span[data-type][data-value="true"] {
+	border-width: 1.5px;
+}
+
 table.output span[data-type]:hover {
 	cursor: pointer;
 }
@@ -190,7 +198,7 @@ table.output span.dark {
 	text-transform: lowercase;
 	display: inline-block;
 	border: none;
-	border-radius: 5px;
+	border-radius: 3px;
 	padding: 0px 3px;
 }
 
