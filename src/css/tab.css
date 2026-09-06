@@ -3,10 +3,10 @@
 	display: flex; /* Changed from inline-flex */
 	flex-wrap: wrap; /* Allows items to flow to the next line */
 	align-items: center;
-	gap: 0.25rem; /* gap-1 */
-	background-color: #f3f4f6; /* bg-gray-100 */
-	padding: 0.25rem; /* p-1 */
-	border-radius: 0.75rem; /* rounded-xl */
+	gap: 0.25rem;
+	background-color: #f3f4f6;
+	padding: 0.25rem;
+	border-radius: 0.75rem;
 }
 
 /* Individual Tab */
@@ -15,36 +15,35 @@
 	align-items: center;
 	justify-content: center;
 	gap: 0.25rem;
-	padding: 0.375rem 0.75rem; /* py-1.5 px-3 */
+	padding: 0.375rem 0.75rem;
 
 	font-family:
 		system-ui,
 		-apple-system,
 		sans-serif;
-	font-size: 0.875rem; /* text-sm */
-	font-weight: 500; /* font-medium */
-	color: #4b5563; /* text-gray-600 */
+	font-size: 0.875rem;
+	color: #4b5563;
 
 	background: transparent;
 	border: none;
-	border-radius: 0.5rem; /* rounded-lg */
+	border-radius: 0.5rem;
 	cursor: pointer;
 	transition: all 0.15s ease-in-out;
 }
 
 /* Hover State */
 .tab:hover {
-	color: #111827; /* hover:text-gray-900 */
+	color: #111827;
 }
 
 /* Active State */
 .tab.active,
 .tab[aria-selected="true"] {
-	background-color: #ffffff; /* bg-white */
-	color: #111827; /* text-gray-900 */
+	background-color: #ffffff;
+	color: #111827;
 	box-shadow:
 		0 1px 3px 0 rgba(0, 0, 0, 0.1),
-		0 1px 2px -1px rgba(0, 0, 0, 0.1); /* shadow-sm */
+		0 1px 2px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Focus State */
@@ -70,14 +69,13 @@
 }
 
 .tab-close:hover {
-	background-color: #e5e7eb; /* bg-gray-200 */
-	color: #111827; /* text-gray-900 */
+	background-color: #e5e7eb;
+	color: #111827;
 }
 
 /* Specific styling for the "+" add button */
 .tab-add {
-	font-weight: 600;
-	color: #2563eb; /* text-blue-600 */
+	color: #2563eb;
 	padding-left: 0.625rem;
 	padding-right: 0.625rem;
 }
@@ -100,7 +98,7 @@
 		system-ui,
 		-apple-system,
 		sans-serif;
-	color: #374151; /* text-gray-700 */
+	color: #374151;
 }
 
 /* Show active panel */

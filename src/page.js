@@ -271,28 +271,28 @@ export const attachHelpFn = (btn) => {
 			icon: "copy_to_csv.png",
 		},
 		firefox: {
-			url: "https://addons.mozilla.org/en-US/firefox/addon/csv-reader/",
-			name: "CSV Reader",
-			by: "Rubén",
-			icon: "csv_reader.png",
+			url: "https://www.google.com/search?q=copy+html+table+as+csv+extension+for+firefox+browser",
+			name: "search on Google",
+			by: null,
+			icon: null,
 		},
 		safari: {
-			url: "https://apps.apple.com/dk/app/copytables/id1472937623?mt=12",
-			name: "Copytables",
-			by: "Georg Barikin",
-			icon: "copy_tables.png",
+			url: "https://www.google.com/search?q=copy+html+table+as+csv+extension+for+safari+browser",
+			name: "search on Google",
+			by: null,
+			icon: null,
 		},
 		opera: {
-			url: "https://chromewebstore.google.com/detail/copy-as-csv/nmbngliaokchkodkidehnjbhgpkihdko",
-			name: "Copy to CSV",
-			by: "Free Useful Apps",
-			icon: "copy_to_csv.png",
+			url: "https://www.google.com/search?q=copy+html+table+as+csv+extension+for+opera+browser",
+			name: "search on Google",
+			by: null,
+			icon: null,
 		},
 		unknown: {
 			url: "https://www.google.com/search?q=copy+html+table+as+csv+extension+for+my+browser",
-			name: "Search on Google",
-			by: "Google",
-			icon: "google.png",
+			name: "search on Google",
+			by: null,
+			icon: null,
 		},
 	};
 
@@ -300,9 +300,15 @@ export const attachHelpFn = (btn) => {
 		// Fall back to 'unknown' if detected browser isn't in the object map
 		const extData = ext[browser] || ext.unknown;
 
-		const htmlMessage = `Please install the <a href="${extData.url}" target="_blank" rel="noopener noreferrer" class="ext-link" title="Extension by ${extData.by}"><img src="${extData.icon}" alt="icon" /> ${extData.name}</a> extension to copy tables from ESIMS.`;
+		const htmlMessage = (extData) => {
+			if (extData.by) {
+				return `Please install the <a href="${extData.url}" target="_blank" rel="noopener noreferrer" class="ext-link" title="Extension by ${extData.by}"><img src="${extData.icon}" alt="icon" /> ${extData.name}</a> extension to copy tables from ESIMS.`;
+			} else {
+				return `Please <a href="${extData.url}" target="_blank" rel="noopener noreferrer" class="ext-link">${extData.name} for copy html table as csv extension</a> to copy tables from ESIMS.`;
+			}
+		};
 
-		showModal("Information", htmlMessage, null, "Okay", "primary");
+		showModal("Information", htmlMessage(extData), null, "Okay", "primary");
 	});
 };
 

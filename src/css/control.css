@@ -11,7 +11,6 @@
 		-apple-system,
 		sans-serif;
 	font-size: 0.875rem;
-	font-weight: 500;
 	line-height: 1.25rem;
 
 	border-radius: 0.5rem;
@@ -69,14 +68,14 @@
 /* Danger Variant */
 .btn-danger {
 	color: #ffffff;
-	background-color: #dc2626; /* bg-red-600 */
+	background-color: #dc2626;
 	border: 1px solid transparent;
 }
 .btn-danger:hover {
-	background-color: #b91c1c; /* bg-red-700 */
+	background-color: #b91c1c;
 }
 .btn-danger:active {
-	background-color: #991b1b; /* bg-red-800 */
+	background-color: #991b1b;
 }
 
 /* Variant Specific Overrides for Disabled */
@@ -123,7 +122,7 @@
 .form-group {
 	display: flex;
 	flex-direction: column;
-	gap: 0.375rem; /* gap-1.5 */
+	gap: 0.375rem;
 	margin-bottom: 1rem;
 }
 
@@ -134,30 +133,29 @@
 		system-ui,
 		-apple-system,
 		sans-serif;
-	font-size: 0.875rem; /* text-sm */
-	font-weight: 500; /* font-medium */
-	color: #374151; /* text-gray-700 */
+	font-size: 0.875rem;
+	color: #374151;
 }
 
 /* Base Input & Textarea Styling */
 .form-input,
 .form-textarea {
 	width: 100%;
-	padding: 0.5rem 0.75rem; /* py-2 px-3 */
+	padding: 0.5rem 0.75rem;
 
 	/* font-family: var(--mono); */
 	font-family:
 		system-ui,
 		-apple-system,
 		sans-serif;
-	font-size: 0.75rem; /* text-sm */
+	font-size: 0.75rem;
 	line-height: 1.25rem;
-	color: #111827; /* text-gray-900 */
+	color: #111827;
 
-	background-color: #ffffff; /* bg-white */
-	border: 1px solid #d1d5db; /* border-gray-300 */
-	border-radius: 0.375rem; /* rounded-md */
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+	background-color: #ffffff;
+	border: 1px solid #d1d5db;
+	border-radius: 0.375rem;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
 	transition:
 		border-color 0.15s ease-in-out,
@@ -181,34 +179,34 @@
 /* Placeholder Styling */
 .form-input::placeholder,
 .form-textarea::placeholder {
-	color: #9ca3af; /* placeholder-gray-400 */
+	color: #9ca3af;
 }
 
 /* Focus State (Tailwind Ring Style) */
 .form-input:focus,
 .form-textarea:focus {
 	outline: none;
-	border-color: #2563eb; /* focus:border-blue-600 */
-	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25); /* focus:ring-2 focus:ring-blue-500/25 */
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
 /* Disabled State */
 .form-input:disabled,
 .form-textarea:disabled {
-	background-color: #f3f4f6; /* bg-gray-100 */
-	color: #6b7280; /* text-gray-500 */
+	background-color: #f3f4f6;
+	color: #6b7280;
 	cursor: not-allowed;
 }
 
 /* Error State (Optional) */
 .form-input.error,
 .form-textarea.error {
-	border-color: #ef4444; /* border-red-500 */
+	border-color: #ef4444;
 }
 
 .form-input.error:focus,
 .form-textarea.error:focus {
-	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25); /* focus:ring-red-500/25 */
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
 }
 
 .form-helper {
@@ -216,8 +214,8 @@
 		system-ui,
 		-apple-system,
 		sans-serif;
-	font-size: 0.65rem; /* text-xs */
-	color: #6b7280; /* text-gray-500 */
+	font-size: 0.65rem;
+	color: #6b7280;
 	margin: 0;
 	line-height: 1rem;
 	margin-top: -0.15rem;

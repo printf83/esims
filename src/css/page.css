@@ -66,7 +66,7 @@ body {
 	.page {
 		width: 210mm;
 		height: 297mm;
-		padding: 0.75cm 0.5cm; /* same like @media print @page margin */
+		padding: 1cm 0.75cm; /* same like @media print @page margin */
 		background-color: #fdfbf7;
 		border: 1px solid #e7e5e4;
 		border-radius: 2px;
@@ -80,7 +80,7 @@ body {
 @media print {
 	@page {
 		size: A4 portrait;
-		margin: 0.75cm 0.5cm;
+		margin: 1cm 0.75cm;
 	}
 
 	#result {
@@ -92,12 +92,17 @@ body {
 		display: none;
 	}
 
+	.app,
 	.group {
-		width: 100%;
+		width: 100% !important;
 	}
 
 	.page {
 		page-break-after: always;
-		width: 100%;
+		width: 100% !important;
+	}
+
+	table.output {
+		width: 190mm !important;
 	}
 }
