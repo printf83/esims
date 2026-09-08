@@ -320,6 +320,9 @@ async function generatePDF(selector, filename = "document.pdf") {
 		return;
 	}
 
+	const A4_WIDTH_PX = 2480;
+	const A4_HEIGHT_PX = 3508;
+
 	let pdf = null;
 
 	for (let i = 0; i < pages.length; i++) {
@@ -331,9 +334,11 @@ async function generatePDF(selector, filename = "document.pdf") {
 
 		// Convert page wrapper to Canvas using exact element bounds
 		const canvas = await toCanvas(pageElement, {
-			pixelRatio: 4,
+			pixelRatio: 2,
 			width: width,
 			height: height,
+			canvasWidth: A4_WIDTH_PX,
+			canvasHeight: A4_HEIGHT_PX,
 		});
 
 		if (i === 0) {
