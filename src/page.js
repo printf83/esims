@@ -49,8 +49,8 @@ export const buildResult = (container, data) => {
 
 	attachHoverEffect(container, "span[data-type]");
 	attachGroupTableSort(container, "div.group", {
-		tableTitleRows: TABLE_TITLE_ROWS,
-		maxRowsPerPage: MAX_ROWS_PER_PAGE,
+		tableTitleRows: TABLE_TITLE_ROWS(),
+		maxRowsPerPage: MAX_ROWS_PER_PAGE(),
 	});
 };
 

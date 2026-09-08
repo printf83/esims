@@ -149,8 +149,8 @@ export function buildTable(company, data) {
 	// 5. Masukkan ke dalam result.innerHTML
 
 	// Configuration for page capacities
-	const tableTitleRows = TABLE_TITLE_ROWS; // Space consumed on page 1
-	const maxRowsPerPage = MAX_ROWS_PER_PAGE; // Standard max rows for regular pages
+	const tableTitleRows = TABLE_TITLE_ROWS(); // Space consumed on page 1
+	const maxRowsPerPage = MAX_ROWS_PER_PAGE(); // Standard max rows for regular pages
 	const firstPageMaxRows = maxRowsPerPage - tableTitleRows; // Capacity for page 1
 
 	const pages = [];
